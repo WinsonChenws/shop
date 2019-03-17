@@ -1,7 +1,7 @@
 <template>
  
   <view>
-    shouye 
+    首页
   </view>
 </template>
 
