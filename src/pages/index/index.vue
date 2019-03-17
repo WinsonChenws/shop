@@ -22,7 +22,17 @@
         </swiper-item>
       </block>
     </swiper>
-    <!-- 轮播图结束 -->
+    <!-- 轮播图结束 huiling678837*-->
+
+    <!-- 首页分类开始 -->
+     <view class="cate">
+      <block
+        v-for="(item,index) in cate"
+        :key="index">
+          <image class="cate-img" src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/icon_index_nav_4@2x.png"> </image>
+      </block>
+    </view>
+    <!-- 首页分类结束 -->
   </view>
 </template>
 
@@ -74,5 +84,16 @@ swiper{
 .slide-image{
   width: 750rpx;
   height: 340rpx;
+}
+/* 分类 */
+.cate{
+  height: 180rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.cate-img{
+  height: 140rpx;
+  width: 128rpx;
 }
 </style>
