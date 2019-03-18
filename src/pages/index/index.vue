@@ -1,11 +1,7 @@
 <template>
   <view>
     <!-- 搜索框开始 -->
-    <navigator url="../search/main" hover-class="none" class="search">
-      <view class="search-input">
-        <icon type="search" size="32rpx" class="search-icon"></icon>搜索
-      </view>
-    </navigator>
+      <search></search>
     <!-- 搜索框结束 -->
     <!-- 轮播图开始 -->
     <swiper
@@ -29,77 +25,83 @@
       <block
         v-for="(item,index) in cate"
         :key="index">
-          <image class="cate-img" src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/icon_index_nav_4@2x.png"> </image>
+          <image class="cate-img" :src="item.image_src"> </image>
       </block>
     </view>
     <!-- 首页分类结束 -->
 
     <!-- 首页楼层开始 -->
+    <block v-for="(item,index) in floordata" :key="index">
     <view class="divide"></view>
     <view class="floor">
       <view class="floor-title">
-        <image src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_title.png"></image>
+        <image :src="item.floor_title.image_src"></image>
       </view>
       <view class="floor-body">
         <view class="floor-body-left">
           <image
-            src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_1@2x.png"
+            :src="item.product_list[0].image_src"
             >
           </image>
         </view>
         <view class="floor-body-right">
-           <image src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_2@2x.png"></image>
-          <image src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_3@2x.png"></image>
-          <image src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_4@2x.png"></image>
-          <image src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_5@2x.png"></image>
+           <block v-for="(subitem,subindex) in item.product_list" :key="subindex">
+           <image v-if="subindex !==0 " :src="item.product_list[subindex].image_src"></image>
+           </block>
         </view>
       </view>
     </view>
+    </block>
     <!-- 首页楼层结束 -->
   </view>
 </template>
 
 <script>
+  // 引入组件
+import Search from "../../components/Search.vue";
 export default {
   data() {
     return{
       imgUrls:[],
-      cate:[1,2,3,4]
+      cate:[],
+      floordata:[]
     }
+  },
+  components:{
+    Search
   },
   // 小程序加载的时候触发
   onLoad(){
-    // 请求数据
+    // 请求轮播图数据
     wx.request({
       url: 'https://www.zhengzhicheng.cn/api/public/v1/home/swiperdata', //开发者服务器接口地址",
       method: 'GET',
       success: res => {
         this.imgUrls = res.data.message;
       },
-    });
+    }),
+    //分类入口数据
+     wx.request({
+      url: 'https://www.zhengzhicheng.cn/api/public/v1/home/catitems', //开发者服务器接口地址",
+      method: 'GET',
+      success: res => {
+        this.cate = res.data.message;
+      },
+    })
+     //分类图片展示
+     wx.request({
+      url: 'https://www.zhengzhicheng.cn/api/public/v1/home/floordata', //开发者服务器接口地址",
+      method: 'GET',
+      success: res => {
+        this.floordata = res.data.message;
+      },
+    })
   }
 };
 </script>
 
 <style>
-/* 头部搜索 */
-.search {
-  padding: 20rpx;
-  background-color: #eb4450;
-}
-.search-input {
-  height: 60rpx;
-  background: #fff;
-  border-radius: 12rpx;
-  color: #333;
-  font-size: 30rpx;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.search-icon {
-  margin-right: 16rpx;
-}
+
 /* 轮播图 */
 swiper{
   height: 340rpx;
