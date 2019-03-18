@@ -10,7 +10,7 @@ function request(url, data = {}, header = {}, method = "GET") {
             success: res => {
                 resolve(res)
             },
-            faile: () => {
+            fail: () => {
                 reject()
             },
         });

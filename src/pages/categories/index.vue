@@ -8,10 +8,13 @@
       <view class="cata">
         <!-- 分类左边开始 -->
         <scroll-view scroll-y class="cata-left">
-          <block v-for="(item,index) in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,18,19,20,22,2222,222,22,2,2,2,2]" :key="index"
+          <block v-for="(item,index) in cate" :key="index"
             >
-          <view class="item" :class="{ active:index ===tabIndex}" @tap="changTabs(index)" 
-          >大家电</view>
+          <view 
+          class="item" :class="{ active:index ===tabIndex}" @tap="changTabs(index)" 
+          >
+          {{item.cat_name}}
+          </view>
           </block>
         </scroll-view>
 
@@ -19,18 +22,21 @@
         <!-- 分类右边开始 -->
          <!-- 4.0 分类右边 -->
       <scroll-view scroll-y class="cata-right">
+        <block v-for="(item,index) in rightData" :key="index">
+         
         <view class="cata-right-title">
-          电视
+          {{item.cat_name}}
         </view>
         <view class="cate-right-list">
-          <block v-for="(item,index) in [1,2,2,3,3,1,1,1,1,1,2,2,3,3,1,1,1,1,1,2,2,3,3,1,1,1,1,1,1,1]" :key="index">
-            <view class="cate-right-list-item">
-              <image src="https://img.alicdn.com/imgextra/i1/2536908852/TB2PZ9rpstnpuFjSZFKXXalFFXa_!!2536908852-0-beehive-scenes.jpg_360x360xzq90.jpg_.webp">
+          <block v-for="(subitem,subindex) in item.children" :key="subindex">
+            <view class="cate-right-list-item" @tap="gotoGoodsList(subitem.cat_name)">
+              <image :src="subitem.cat_icon">
               </image>
-              <view>分类名称</view>
+              <view>{{ subitem.cat_name }}</view>
             </view>
           </block>
         </view>
+</block>
       </scroll-view>
         <!-- 分类右边结束 -->
       </view>
@@ -45,20 +51,38 @@ import request from "../../utils/request.js"
 export default {
   data() {
     return {
-      tabIndex :0
+      tabIndex :0,
+      cate:[],
+      rightData:[]
+      
     }
   },
   components: {
     Search
   },
   onLoad(){
+    // 加载数据优化
+    wx.showLoading({
+      title: '等一会就可以了', //提示的内容,
+      mask: true, //显示透明蒙层，防止触摸穿透,
+    });
     request("https://www.zhengzhicheng.cn/api/public/v1/categories").then((res)=>{
       console.log(res);
+      this.cate = res.data.message;
+      this.rightData = this.cate[this.tabIndex].children;
+      wx.hideLoading();
     })
   },
   methods:{
     changTabs(index){
       this.tabIndex = index;
+       this.rightData = [];
+       setTimeout(() => {
+         this.rightData = this.cate[this.tabIndex].children;
+       }, 1);
+    },
+    gotoGoodsList(name){
+      wx.navigateTo({ url: '/pages/goods_list/main' + '?keyword=' + name });
     }
   }
 };
