@@ -14,6 +14,40 @@
             </view>
         </block>
     </view>
+
+    <!-- 商品详情 -->
+     <block
+            v-for="(item,index) in [1,2,3,4,5]"
+            :key="index">
+            
+        
+    <view class="goods-list">
+      <!-- 左边图片 -->
+      <view class="goods-item">
+         
+            <image src="https://www.zhengzhicheng.cn/full/2fb113b32f7a2b161f5ee4096c319afedc3fd5a1.jpg"></image>
+            <view class="goods-right">
+                 <view class=" .goods-title">
+                    wenzi
+                     <view class="price">
+                     299
+                    </view>
+                  </view>
+            </view>
+           
+      </view>
+      
+      <!-- 右边文字 -->
+     
+ 
+
+    </view>
+      </block>
+
+    <!-- 底线 -->
+    <view class="loading">
+      我下面有一条线
+    </view>
   </view>
 </template>
 

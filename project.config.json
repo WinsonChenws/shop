@@ -29,7 +29,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 1,
+			"current": 2,
 			"list": [
 				{
 					"id": -1,
@@ -42,6 +42,14 @@
 					"id": -1,
 					"name": "分类列表",
 					"pathName": "pages/categories/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "搜索详情",
+					"pathName": "pages/goods_list/main",
+					"query": "keyword=周杰伦",
 					"scene": null
 				}
 			]
