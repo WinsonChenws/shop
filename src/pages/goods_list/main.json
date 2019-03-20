@@ -1,3 +1,6 @@
 {
-    "navigationBarTitleText": "搜索页面"
+    "navigationBarTitleText": "搜索页面",
+    "enablePullDownRefresh": true,
+    "backgroundTextStyle": "dark"
+
 }

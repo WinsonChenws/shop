@@ -58,7 +58,7 @@
 
 <script>
   // 引入组件
-import Search from "../../components/Search.vue";
+import Search from "../../components/search.vue";
 export default {
   data() {
     return{

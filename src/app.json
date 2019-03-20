@@ -4,9 +4,10 @@
         "pages/cart/main",
         "pages/categories/main",
         "pages/my/main",
-        "pages/logs/main",
         "pages/search/main",
-        "pages/goods_list/main"
+        "pages/goods_list/main",
+        "pages/goods_detail/main",
+        "pages/logs/main"
     ],
     "window": {
         "backgroundTextStyle": "light",
